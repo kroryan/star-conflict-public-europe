@@ -30,6 +30,7 @@ This project is not affiliated with Gaijin or StarGem. Star Conflict and its fil
 - [docs/ADMIN.md](docs/ADMIN.md): restarts, MOTD, mail and broadcasts, admin tasks, the database, regenerating game data.
 - [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md): what doesn't work yet, what we tried, and stock quirks.
 - [docs/SOLO-BOTS.md](docs/SOLO-BOTS.md): local-only solo setup, bot profile, start/stop and update commands.
+- [docs/PLAYERBOTS.md](docs/PLAYERBOTS.md): feasibility findings and staged plan for persistent open-world playerbots.
 
 ## Layout
 ```
