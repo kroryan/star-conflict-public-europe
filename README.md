@@ -29,6 +29,7 @@ This project is not affiliated with Gaijin or StarGem. Star Conflict and its fil
 - [docs/CHANGES.md](docs/CHANGES.md): every change against the stock server, with the reason and how to revert it.
 - [docs/ADMIN.md](docs/ADMIN.md): restarts, MOTD, mail and broadcasts, admin tasks, the database, regenerating game data.
 - [docs/KNOWN_ISSUES.md](docs/KNOWN_ISSUES.md): what doesn't work yet, what we tried, and stock quirks.
+- [docs/SOLO-BOTS.md](docs/SOLO-BOTS.md): local-only solo setup, bot profile, start/stop and update commands.
 
 ## Layout
 ```

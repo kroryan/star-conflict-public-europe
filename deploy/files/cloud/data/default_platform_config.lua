@@ -181,7 +181,7 @@ function ConfigureShard()
   	cvars.mm_sectorMaxWingSize 		= 8
   	-- Минимальный размер wing-группы для входа в raid-очерь матчмейкера.
   	-- Отряды меньше этого размера не смогут встать в raid-очерь.
-  	cvars.mm_raidMinWingSize		= 10
+  	cvars.mm_raidMinWingSize		= 1
 
 	-- Фильтр состава групп для raid-очерей: задаёт, кто может вставать в рейд — одиночные игроки, обычные отряды и/или wing-группы.
 	-- 0 - все типы составов: solo, обычные отряды и wing.
@@ -372,7 +372,7 @@ function ConfigureMatchmaker()
 				s1420_ceres3_northmsite = {},
 			},
 			query = { ["mmParams.practice"] = 1 },
-			special = { gameMode = 5, botsCount = 0 },
+			special = { gameMode = 5, botsCount = 10 },
 		},
 
 		-- PVE QUEUE
@@ -383,7 +383,7 @@ function ConfigureMatchmaker()
 			maxTimeInQueue = 10,
 			levelsDesc = {},
 			query = { ["mmParams.pve"] = 1 },
-			special = { pve = 1, gameMode = 7 },
+			special = { pve = 1, gameMode = 7, botsCount = 4 },
 		}
 	}
 
@@ -392,11 +392,11 @@ function ConfigureMatchmaker()
 	-- low on-line
 	local arcadeQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 4,
+		optimalPlayers = 1,
 		minPlayers = 1,
 		maxExpandTime = 30,
 		regionLocalizedTimeInQueue = 1,
-		maxTimeInQueue = 60,
+		maxTimeInQueue = 5,
 		maxSquadTimeInQueue = 0x7FFFFFFF,
 		levelsDesc = {
 			s1338_devilsjaw = {4,9,10,11},
@@ -406,17 +406,17 @@ function ConfigureMatchmaker()
 			s1338_pandora_dreadnwreck = {4,9,10,11},
 		},
 		query = { ["mmParams.arcade"] = 1, mmRank = { ["$gte"] = 1, ["$lte"] = 15 }, mmSquadRank = { ["$gte"] = 1, ["$lte"] = 15 }, mmValue = { ["$gte"] = 0, ["$lt"] = 100 } },
-		special = { arcade = 1, botsCount = 8 }, -- total participants (humans + bots); even, so teams start 4v4
+		special = { arcade = 1, botsCount = 24 }, -- total participants (humans + bots); 12v12 with one pilot
 	}
 
 	--
 	--arcadeQueueTemplate.levelsDesc = "s1338_pandora_dreadnwreck:4; s1340_thar_aliendebris13:4; s8256_thar_threshold:4"
 	-- tiers by ship rank (mmValue is 0 for everyone here, so it can't split the pools)
-	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 1, 3, 1, 3, 0, 100, { qid = 101, special = { arcade = 1, botsCount = 8, botPresetNames = { "BotsT1" }, queueFlags = { newbie = 1, }, }, maxPlayers = 16 } ) )
-	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 4, 6, 4, 6, 0, 100, { qid = 102, special = { arcade = 1, botsCount = 8, botPresetNames = { "BotsT2" } } } ) )
-	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 7, 9, 7, 9, 0, 100, { qid = 103, special = { arcade = 1, botsCount = 8, botPresetNames = { "BotsT3" } } } ) )
-	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 10, 12, 10, 12, 0, 100, { qid = 104, special = { arcade = 1, botsCount = 8, botPresetNames = { "BotsT4" } } } ) )
-	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 13, 17, 13, 17, 0, 100, { qid = 105, special = { arcade = 1, botsCount = 8, botPresetNames = { "BotsT5" } } } ) )
+	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 1, 3, 1, 3, 0, 100, { qid = 101, special = { arcade = 1, botsCount = 24, botPresetNames = { "BotsT1" }, queueFlags = { newbie = 1, }, }, maxPlayers = 24 } ) )
+	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 4, 6, 4, 6, 0, 100, { qid = 102, special = { arcade = 1, botsCount = 24, botPresetNames = { "BotsT2" } } } ) )
+	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 7, 9, 7, 9, 0, 100, { qid = 103, special = { arcade = 1, botsCount = 24, botPresetNames = { "BotsT3" } } } ) )
+	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 10, 12, 10, 12, 0, 100, { qid = 104, special = { arcade = 1, botsCount = 24, botPresetNames = { "BotsT4" } } } ) )
+	table.insert( queuesConfigLo, InstantiateQueueTemplate( arcadeQueueTemplate, 13, 17, 13, 17, 0, 100, { qid = 105, special = { arcade = 1, botsCount = 24, botPresetNames = { "BotsT5" } } } ) )
 	--
 	--arcadeQueueTemplate.levelsDesc = "s1338_devilsjaw:4,9,10; s1340_aliendestsatation:4,10; s1340_thar_gasgiant:4,9; s1420_ceres3_northmsite:4,9,10"
 	--
@@ -430,7 +430,7 @@ function ConfigureMatchmaker()
 
 	local coopQueueTemplate = {
 		maxPlayers = 16,
-		optimalPlayers = 4,
+		optimalPlayers = 1,
 		minPlayers = 1,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -469,8 +469,8 @@ function ConfigureMatchmaker()
 
 	local footballQueueTemplate = {
 		maxPlayers = 6,
-		optimalPlayers = 6,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -478,15 +478,15 @@ function ConfigureMatchmaker()
 			football = { 21 },
 		},
 		query = { ["mmParams.football"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 6 },
 	}
 
 	table.insert( queuesConfigLo, footballQueueTemplate )
 
 	local gtdmQueueTemplate = {
 		maxPlayers = 2,
-		optimalPlayers = 2,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -494,15 +494,15 @@ function ConfigureMatchmaker()
 			da_prototype = { 13 },
 		},
 		query = { ["mmParams.gtdm"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 2 },
 	}
 
 	table.insert( queuesConfigLo, gtdmQueueTemplate )
 	
 	local atdmQueueTemplate = {
 		maxPlayers = 8,
-		optimalPlayers = 8,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -510,7 +510,7 @@ function ConfigureMatchmaker()
 			paper_airplanes = { 26 },
 		},
 		query = { ["mmParams.atdm"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 8 },
 	}
 
 	table.insert( queuesConfigLo, atdmQueueTemplate )
@@ -518,8 +518,8 @@ function ConfigureMatchmaker()
 
 	local sentinelQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 8,
-		minPlayers = 4,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -527,15 +527,15 @@ function ConfigureMatchmaker()
 			s1420_ceres3_asteroidcity = {9},
 		},
 		query = { ["mmParams.sentinel"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, sentinelQueueTemplate )
 
 	local captureTheBaseQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 8,
-		minPlayers = 4,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -543,7 +543,7 @@ function ConfigureMatchmaker()
 			s1338_devilsjaw = { 3 },
 		},
 		query = { ["mmParams.capture_the_base"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, captureTheBaseQueueTemplate )
@@ -551,8 +551,8 @@ function ConfigureMatchmaker()
 
 	local hangerGamesQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 6,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -560,15 +560,15 @@ function ConfigureMatchmaker()
 			s1338_hg_pandora_anomaly = { 24 },
 		},
 		query = { ["mmParams.hunger_games"] = 1 },
-		special = { hunger_games = 1 },
+		special = { hunger_games = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, hangerGamesQueueTemplate )
 
 	local oneAgainstAllQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 3,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -583,8 +583,8 @@ function ConfigureMatchmaker()
 
 	local aprilTeamDeathMatchQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 8,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -592,7 +592,7 @@ function ConfigureMatchmaker()
 			paper_airplanes = { 26 },
 		},
 		query = { ["mmParams.atdm"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, aprilTeamDeathMatchQueueTemplate )
@@ -600,8 +600,8 @@ function ConfigureMatchmaker()
 
 	local zombieQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 10,
-		minPlayers = 5,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -609,15 +609,15 @@ function ConfigureMatchmaker()
 			da_deathstar = { 27 },
 		},
 		query = { ["mmParams.zombie"] = 1 },
-		special = { zombie = 1 },
+		special = { zombie = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, zombieQueueTemplate )
 
 	local closeDistanceQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 8,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -625,15 +625,15 @@ function ConfigureMatchmaker()
 			allidium_yard = { 28 },
 		},
 		query = { ["mmParams.close_distance"] = 1 },
-		special = { close_distance = 1 },
+		special = { close_distance = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, closeDistanceQueueTemplate )
 
 	local autogenDmGamesQueueTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 6,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -641,7 +641,7 @@ function ConfigureMatchmaker()
 			s1338_pandora_anomaly = { 29 },
 		},
 		query = { ["mmParams.autogen_dm"] = 1 },
-		special = { hunger_games = 1 },
+		special = { hunger_games = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, autogenDmGamesQueueTemplate )
@@ -649,8 +649,8 @@ function ConfigureMatchmaker()
 
 	local threeTeamsDeathMatchTemplate = {
 		maxPlayers = 24,
-		optimalPlayers = 6,
-		minPlayers = 3,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -658,7 +658,7 @@ function ConfigureMatchmaker()
 			s1340_thar_alienruins = { 30 },
 		},
 		query = { ["mmParams.three_teams_dm"] = 1 },
-		special = { three_teams_dm = 1 },
+		special = { three_teams_dm = 1, botsCount = 24 },
 	}
 
 	table.insert( queuesConfigLo, threeTeamsDeathMatchTemplate )
@@ -666,8 +666,8 @@ function ConfigureMatchmaker()
 
 	local aprilControlQueueTemplate = {
 		maxPlayers = 8,
-		optimalPlayers = 8,
-		minPlayers = 2,
+		optimalPlayers = 1,
+		minPlayers = 1,
 		maxExpandTime = 0,
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
@@ -675,7 +675,7 @@ function ConfigureMatchmaker()
 			paper_airplanes = { 31 },
 		},
 		query = { ["mmParams.april_control"] = 1 },
-		special = { brawl = 1 },
+		special = { brawl = 1, botsCount = 8 },
 	}
 
 	table.insert( queuesConfigLo, aprilControlQueueTemplate )
@@ -817,8 +817,8 @@ function ConfigureMatchmaker()
         regionLocalizedTimeInQueue = 1, -- default value is 120, override it by something small
         special = {
 			universe = 1,
-			minSizeWing = 5,
-			minSizeTeam = 4,
+			minSizeWing = 1,
+			minSizeTeam = 1,
 			withBots = true,
 			botPresetType = bpt_none,
 			botPresetByTier = {"BotsBZS_T3","BotsBZS_T3","BotsBZS_T3","BotsBZS_T4","BotsBZS_T5"},
@@ -837,7 +837,7 @@ function ConfigureMatchmaker()
     local leagueQueue = {
         maxPlayers = 12,
         regionLocalizedTimeInQueue = 1, -- default value is 120, override it by something small
-        special = { universe = 1, minSizeWing = 3, minSizeTeam = 1, withBots = false, botPresetByTier = {"BotsBZS_T3","BotsBZS_T3","BotsBZS_T3","BotsBZS_T4","BotsBZS_T5"}, queueFlags = { universe = 1, rank = 15, }, },
+        special = { universe = 1, minSizeWing = 1, minSizeTeam = 1, withBots = true, botPresetByTier = {"BotsBZS_T3","BotsBZS_T3","BotsBZS_T3","BotsBZS_T4","BotsBZS_T5"}, queueFlags = { universe = 1, rank = 15, }, },
         squadFilter = 0,
         qid = 502,
         levelsDesc = {
@@ -868,7 +868,7 @@ function ConfigureMatchmaker()
 		regionLocalizedTimeInQueue = 1,
 		maxTimeInQueue = 10,
 		levelsDesc = {},
-		special = { pve_raid = 1, gameMode = 7 },
+		special = { pve_raid = 1, gameMode = 7, botsCount = 12 },
 		query = { ["mmParams.pve_raid"] = 1 },
 		--squadFilter = 4, -- wings only, now use cvar in shard mm_raidSquadFilter
 	}
@@ -888,7 +888,7 @@ function ConfigureMatchmaker()
 
 	-- Количество ботов. (тип: целое число; диапазон: 0..31)
 	-- Базовое количество ботов; в конкретной очереди может быть переопределено.
-	cvars.mm_botsCount = 6
+	cvars.mm_botsCount = 23
 
 	-- Базовый игровой режим для новой игровой сессии; в конкретной очереди может быть переопределён.
 	-- Возможные значения (не все работают):
