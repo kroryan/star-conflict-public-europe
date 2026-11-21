@@ -49,4 +49,6 @@ Acceptance for a full playerbot feature requires real online sessions visible in
 
 ## Status
 
-This document records the feasibility gate and design. No playerbot sessions are created by the current server profile. The existing battle-bot matchmaking remains unchanged. Do not advertise open-world playerbots until Gate 0 has passed.
+An experimental launcher now lives in [`deploy/playerbots`](../deploy/playerbots/README.md). It prepares up to 50 local account identities, attempts opt-in client login and open-space entry, and starts clients in controlled batches. It has **not** been run or verified end to end. It does not attach NPC AI to the account-backed session, so autonomous player behavior remains unimplemented.
+
+The current server profile still creates no playerbot sessions by itself. The existing battle-bot matchmaking remains unchanged. Do not advertise open-world playerbots until Gate 0 has passed.
